@@ -13,7 +13,7 @@
             stargate addresses known to the Goa'uld, the necessary drift calculations could be made to successfully dial
             other planets.
         </description>
-        <id_code></id_code>
+        <code></code>
         <symbols>27-7-15-32-12-30</symbols>
         <locked>false</locked>
     </address>
@@ -29,7 +29,7 @@
             of Ra, and the Jaffa homeworld of Chulak. His loyal Jaffa wore the symbol of the serpent. For many years,
             Bra'tac had served as his First Prime, until Teal'c rose to the position and succeeded his mentor.
         </description>
-        <id_code></id_code>
+        <code></code>
         <symbols>20-18-11-38-10-32</symbols>
         <locked>false</locked>
     </address>
@@ -41,7 +41,7 @@
             Table. The walled town is reminiscent of medieval England, and the public square prominently displays a
             sword embedded in a stone.
         </description>
-        <id_code>PX1-767</id_code>
+        <code>PX1-767</code>
         <symbols>20-2-35-8-26-15</symbols>
         <locked>false</locked>
     </address>
@@ -53,7 +53,7 @@
             humans first evolved, the planet from which they were taken and seeded among the stars by the Goa'uld. The
             galaxy is populated by the ancient peoples of Earth.
         </description>
-        <id_code></id_code>
+        <code></code>
         <symbols>28-26-5-36-11-29</symbols>
         <locked>false</locked>
     </address>
@@ -65,7 +65,7 @@
             was chosen as the location of the Alpha Site, the off-world base established by the SGC. The secrecy of the
             base was strictly guarded, and it became a sanctuary for refugees among the Rebel Jaffa and the Tok'ra.
         </description>
-        <id_code>P3X-984</id_code>
+        <code>P3X-984</code>
         <symbols>29-5-36-6-23-?</symbols>
         <locked>false</locked>
     </address>

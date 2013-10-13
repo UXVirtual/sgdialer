@@ -97,7 +97,7 @@ class AddressBookModel(object):
             self.addresses.append(
                 AddressModel(
                     address["name"],
-                    address["id_code"],
+                    address["code"],
                     str(symbol1),
                     str(symbol2),
                     str(symbol3),
