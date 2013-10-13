@@ -1,7 +1,9 @@
-__author__ = 'Michael Andrew'
+__author__ = 'Michael Andrew michael@hazardmedia.co.nz'
 
 import pygame
 from pygame.locals import *
+from nz.co.hazardmedia.sgdialer.controllers.DialerController import DialerController
+
 
 class AppController:
     def __init__(self):
@@ -21,6 +23,9 @@ class AppController:
         pygame.init()
         self._display_surf = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
         self._running = True
+
+        #init dialing controller
+        dialer = DialerController()
 
     def on_event(self, event):
         """

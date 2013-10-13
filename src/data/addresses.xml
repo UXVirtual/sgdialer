@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Data referenced from http://rdanderson.com/stargate/glyphs/glyphs.htm -->
+<addresses>
+
+    <address>
+        <name>Abydos</name>
+        <description>
+            Abydos is a sandy desert planet with 36-hour days and two moons. Once ruled by Ra, the planet was home to
+            the Abydonians who lived in simple villages and worked in the naquadah mines in the shadow of Ra's pyramid
+            where the stargate is housed. Abydos is relatively close to Earth in the stargate network, making it
+            possible to dial there without compensating for stellar drift. Thus it was the destination of the first
+            stargate mission from Earth. With the discovery of a map room and an elaborate cartouche containing all the
+            stargate addresses known to the Goa'uld, the necessary drift calculations could be made to successfully dial
+            other planets.
+        </description>
+        <id_code></id_code>
+        <symbols>27-7-15-32-12-30</symbols>
+        <locked>false</locked>
+    </address>
+
+    <address>
+        <name>Apophis' Base</name>
+        <description>
+            In the Book of the Dead from Egyptian mythology, Apophis was the serpent god who ruled the night, rival to
+            his brother Ra, the sun god who ruled the day. The Goa'uld Apophis had taken as his host a scribe in the
+            Temple of Amon at Karnak. Protected by an army of Serpent Guards, he rose to power as one of the Goa'uld
+            System Lords. Among the worlds in his domain were Pangar, which he ruled for a time after defeating the
+            System Lord Shak'ran, Cartago, where he harvested humans as hosts, Abydos, which he claimed after the death
+            of Ra, and the Jaffa homeworld of Chulak. His loyal Jaffa wore the symbol of the serpent. For many years,
+            Bra'tac had served as his First Prime, until Teal'c rose to the position and succeeded his mentor.
+        </description>
+        <id_code></id_code>
+        <symbols>20-18-11-38-10-32</symbols>
+        <locked>false</locked>
+    </address>
+
+    <address>
+        <name>Camelot</name>
+        <description>
+            Camelot, a village on PX1-767, is considered to be the past and future home of King Arthur and his Round
+            Table. The walled town is reminiscent of medieval England, and the public square prominently displays a
+            sword embedded in a stone.
+        </description>
+        <id_code>PX1-767</id_code>
+        <symbols>20-2-35-8-26-15</symbols>
+        <locked>false</locked>
+    </address>
+
+    <address>
+        <name>Earth</name>
+        <description>
+            Earth, the first world, is referred to as the Tauri by the Goa'uld. It is where the Ancients lived and where
+            humans first evolved, the planet from which they were taken and seeded among the stars by the Goa'uld. The
+            galaxy is populated by the ancient peoples of Earth.
+        </description>
+        <id_code></id_code>
+        <symbols>28-26-5-36-11-29</symbols>
+        <locked>false</locked>
+    </address>
+
+    <address>
+        <name>Alpha Site</name>
+        <description>
+            P3X-984 is a world of scattered forests and rocky hills. Because its address was unknown to the Goa'uld, it
+            was chosen as the location of the Alpha Site, the off-world base established by the SGC. The secrecy of the
+            base was strictly guarded, and it became a sanctuary for refugees among the Rebel Jaffa and the Tok'ra.
+        </description>
+        <id_code>P3X-984</id_code>
+        <symbols>29-5-36-6-23-?</symbols>
+        <locked>false</locked>
+    </address>
+
+</addresses>

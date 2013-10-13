@@ -1,15 +1,7 @@
-__author__ = 'Michael'
+__author__ = 'Michael Andrew michael@hazardmedia.co.nz'
 
 from distutils.core import setup
-setup(name='controllers',
+setup(name='sgdialer',
       version='1.0',
-      packages=['controllers','co.hazardmedia.sgdialer.controllers'],
-      )
-setup(name='models',
-      version='1.0',
-      packages=['models','co.hazardmedia.sgdialer.models'],
-      )
-setup(name='views',
-      version='1.0',
-      packages=['views','co.hazardmedia.sgdialer.views'],
+      packages=['sgdialer','co.hazardmedia.sgdialer'], requires=['xmltodict'],
       )
