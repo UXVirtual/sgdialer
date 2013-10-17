@@ -16,7 +16,7 @@ class AddressBookModel(object):
     def import_data(self):
         print "Importing stargate addresses from data source..."
 
-        data_file = open(os.getcwd()+"\\"+Config.address_data_file_path)
+        data_file = open(os.getcwd()+"/"+Config.address_data_file_path)
         xml = data_file.read()
         parsed_xml = xmltodict.parse(xml)
 

@@ -4,7 +4,7 @@ __author__ = 'Michael Andrew michael@hazardmedia.co.nz'
 class Config(object):
     point_of_origin_code = 0 #index of the point of origin
 
-    address_data_file_path = "data\\addresses.xml" #path from src folder to data file for stargate addresses
+    address_data_file_path = "data/addresses.xml" #path from src folder to data file for stargate addresses
 
     #use font Stargate SG-1 Address Glyphs
     address_symbol_names = {#names of the symbols on the stargate and dhd
