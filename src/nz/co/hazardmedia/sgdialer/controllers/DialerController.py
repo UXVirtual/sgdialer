@@ -2,10 +2,10 @@ __author__ = 'Michael Andrew michael@hazardmedia.co.nz'
 
 from nz.co.hazardmedia.sgdialer.controllers.ChevronController import ChevronController
 from nz.co.hazardmedia.sgdialer.models.AddressBookModel import AddressBookModel
+from nz.co.hazardmedia.sgdialer.controllers.SoundController import SoundController
 
 
 class DialerController(object):
-
     chevron_controller = None
     address_book_model = None
 
@@ -15,7 +15,10 @@ class DialerController(object):
 
         print "DialingController initialized."
 
-        self.prompt_address_input()
+        #self.prompt_address_input()
+        #27-7-15-32-12-30
+        #dial abydos
+        self.dial(27, 7, 15, 32, 12, 30, 1)
 
     def prompt_address_input(self, type="command-line"):
 
@@ -41,34 +44,36 @@ class DialerController(object):
 
     def dial(self, symbol1, symbol2, symbol3, symbol4, symbol5, symbol6, symbol7, symbol8='', symbol9=''):
 
+        print "Dialing " + str(symbol1) + "-" + str(symbol2) + "-" + str(symbol3) + "-" + str(symbol4) + "-" + \
+              str(symbol5) + "-" + str(symbol6) + "-" + str(symbol7) + "-" + str(symbol8) + "-" + str(symbol9)
+
         success = True
-        #TODO: Fix this - AddressBook is not iterable
-        for address in self.address_book_model:
+        for address in self.address_book_model.addresses:
             if address.symbol1.code != symbol1:
                 success = False
 
-            if address.symbol2 != symbol2:
+            if address.symbol2.code != symbol2:
                 success = False
 
-            if address.symbol3 != symbol3:
+            if address.symbol3.code != symbol3:
                 success = False
 
-            if address.symbol4 != symbol4:
+            if address.symbol4.code != symbol4:
                 success = False
 
-            if address.symbol5 != symbol5:
+            if address.symbol5.code != symbol5:
                 success = False
 
-            if address.symbol6 != symbol6:
+            if address.symbol6.code != symbol6:
                 success = False
 
-            if address.symbol7 != symbol7:
+            if (address.symbol7 is not None and address.symbol7.code != symbol7) or address.symbol7 == 1:
                 success = False
 
-            if address.symbol8 != symbol8:
+            if symbol8 != '' and address.symbol8.code != symbol8:
                 success = False
 
-            if address.symbol9 != symbol9:
+            if symbol9 != '' and address.symbol9.code != symbol9:
                 success = False
 
-        pass
+        print "Dialing success: "+str(success)

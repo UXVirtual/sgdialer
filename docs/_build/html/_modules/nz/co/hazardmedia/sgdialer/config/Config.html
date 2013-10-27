@@ -1,0 +1,193 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>nz.co.hazardmedia.sgdialer.config.Config &mdash; sgdialer RC1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../../',
+        VERSION:     'RC1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/doctools.js"></script>
+    <link rel="top" title="sgdialer RC1 documentation" href="../../../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../../../index.html">sgdialer RC1 documentation</a> &raquo;</li>
+          <li><a href="../../../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for nz.co.hazardmedia.sgdialer.config.Config</h1><div class="highlight"><pre>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Michael Andrew michael@hazardmedia.co.nz&#39;</span>
+
+
+<div class="viewcode-block" id="Config"><a class="viewcode-back" href="../../../../../../nz.co.hazardmedia.sgdialer.config.html#nz.co.hazardmedia.sgdialer.config.Config.Config">[docs]</a><span class="k">class</span> <span class="nc">Config</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Config class &quot;&quot;&quot;</span>
+    <span class="n">sound_path</span> <span class="o">=</span> <span class="s">&#39;assets/sounds&#39;</span> <span class="c">#path from src folder to sound assets</span>
+
+    <span class="n">point_of_origin_code</span> <span class="o">=</span> <span class="mi">0</span> <span class="c">#index of the point of origin</span>
+
+    <span class="n">address_data_file_path</span> <span class="o">=</span> <span class="s">&quot;data/addresses.xml&quot;</span> <span class="c">#path from src folder to data file for stargate addresses</span>
+
+    <span class="c">#use font Stargate SG-1 Address Glyphs</span>
+    <span class="n">address_symbol_names</span> <span class="o">=</span> <span class="p">{</span><span class="c">#names of the symbols on the stargate and dhd</span>
+                            <span class="s">&quot;?&quot;</span><span class="p">:</span> <span class="s">&quot;Unknown&quot;</span><span class="p">,</span>
+                            <span class="s">&quot;1&quot;</span><span class="p">:</span> <span class="s">&quot;Earth&quot;</span><span class="p">,</span> <span class="c">#A</span>
+                            <span class="c">#point of origin (in our alternate universe the point of origin acts as a terminator and is</span>
+                            <span class="c">#can be the same on all DHDs)</span>
+                            <span class="s">&quot;2&quot;</span><span class="p">:</span> <span class="s">&quot;Crater&quot;</span><span class="p">,</span> <span class="c">#B</span>
+                            <span class="s">&quot;3&quot;</span><span class="p">:</span> <span class="s">&quot;Virgo&quot;</span><span class="p">,</span> <span class="c">#C</span>
+                            <span class="s">&quot;4&quot;</span><span class="p">:</span> <span class="s">&quot;Bootes&quot;</span><span class="p">,</span> <span class="c">#D</span>
+                            <span class="s">&quot;5&quot;</span><span class="p">:</span> <span class="s">&quot;Centaurus&quot;</span><span class="p">,</span> <span class="c">#E</span>
+                            <span class="s">&quot;6&quot;</span><span class="p">:</span> <span class="s">&quot;Libra&quot;</span><span class="p">,</span> <span class="c">#F</span>
+                            <span class="s">&quot;7&quot;</span><span class="p">:</span> <span class="s">&quot;Serpens Caput&quot;</span><span class="p">,</span> <span class="c">#G</span>
+                            <span class="s">&quot;8&quot;</span><span class="p">:</span> <span class="s">&quot;Norma&quot;</span><span class="p">,</span> <span class="c">#H</span>
+                            <span class="s">&quot;9&quot;</span><span class="p">:</span> <span class="s">&quot;Scorpio&quot;</span><span class="p">,</span> <span class="c">#I</span>
+                            <span class="s">&quot;10&quot;</span><span class="p">:</span> <span class="s">&quot;Cra&quot;</span><span class="p">,</span> <span class="c">#J</span>
+                            <span class="s">&quot;11&quot;</span><span class="p">:</span> <span class="s">&quot;Scutum&quot;</span><span class="p">,</span> <span class="c">#K</span>
+                            <span class="s">&quot;12&quot;</span><span class="p">:</span> <span class="s">&quot;Sagittarius&quot;</span><span class="p">,</span> <span class="c">#L</span>
+                            <span class="s">&quot;13&quot;</span><span class="p">:</span> <span class="s">&quot;Aquila&quot;</span><span class="p">,</span> <span class="c">#M</span>
+                            <span class="s">&quot;14&quot;</span><span class="p">:</span> <span class="s">&quot;Mic&quot;</span><span class="p">,</span> <span class="c">#N</span>
+                            <span class="s">&quot;15&quot;</span><span class="p">:</span> <span class="s">&quot;Capricorn&quot;</span><span class="p">,</span> <span class="c">#O</span>
+                            <span class="s">&quot;16&quot;</span><span class="p">:</span> <span class="s">&quot;Pisces Austrinus&quot;</span><span class="p">,</span> <span class="c">#P</span>
+                            <span class="s">&quot;17&quot;</span><span class="p">:</span> <span class="s">&quot;Equuleus&quot;</span><span class="p">,</span> <span class="c">#Q</span>
+                            <span class="s">&quot;18&quot;</span><span class="p">:</span> <span class="s">&quot;Aquarius&quot;</span><span class="p">,</span> <span class="c">#R</span>
+                            <span class="s">&quot;19&quot;</span><span class="p">:</span> <span class="s">&quot;Pegasus&quot;</span><span class="p">,</span> <span class="c">#S</span>
+                            <span class="s">&quot;20&quot;</span><span class="p">:</span> <span class="s">&quot;Sculptor&quot;</span><span class="p">,</span> <span class="c">#T</span>
+                            <span class="s">&quot;21&quot;</span><span class="p">:</span> <span class="s">&quot;Pisces&quot;</span><span class="p">,</span> <span class="c">#U</span>
+                            <span class="s">&quot;22&quot;</span><span class="p">:</span> <span class="s">&quot;Andromeda&quot;</span><span class="p">,</span> <span class="c">#V</span>
+                            <span class="s">&quot;23&quot;</span><span class="p">:</span> <span class="s">&quot;Triangulum&quot;</span><span class="p">,</span> <span class="c">#W</span>
+                            <span class="s">&quot;24&quot;</span><span class="p">:</span> <span class="s">&quot;Aries&quot;</span><span class="p">,</span> <span class="c">#X</span>
+                            <span class="s">&quot;25&quot;</span><span class="p">:</span> <span class="s">&quot;Perseus&quot;</span><span class="p">,</span> <span class="c">#Y</span>
+                            <span class="s">&quot;26&quot;</span><span class="p">:</span> <span class="s">&quot;Cetus&quot;</span><span class="p">,</span> <span class="c">#Z</span>
+                            <span class="s">&quot;27&quot;</span><span class="p">:</span> <span class="s">&quot;Taurus&quot;</span><span class="p">,</span> <span class="c">#a</span>
+                            <span class="s">&quot;28&quot;</span><span class="p">:</span> <span class="s">&quot;Auriga&quot;</span><span class="p">,</span> <span class="c">#b</span>
+                            <span class="s">&quot;29&quot;</span><span class="p">:</span> <span class="s">&quot;Eridanus&quot;</span><span class="p">,</span> <span class="c">#c</span>
+                            <span class="s">&quot;30&quot;</span><span class="p">:</span> <span class="s">&quot;Orion&quot;</span><span class="p">,</span> <span class="c">#d</span>
+                            <span class="s">&quot;31&quot;</span><span class="p">:</span> <span class="s">&quot;Canis Minor&quot;</span><span class="p">,</span> <span class="c">#e</span>
+                            <span class="s">&quot;32&quot;</span><span class="p">:</span> <span class="s">&quot;Monoceros&quot;</span><span class="p">,</span> <span class="c">#f</span>
+                            <span class="s">&quot;33&quot;</span><span class="p">:</span> <span class="s">&quot;Gemini&quot;</span><span class="p">,</span> <span class="c">#g</span>
+                            <span class="s">&quot;34&quot;</span><span class="p">:</span> <span class="s">&quot;Hydra&quot;</span><span class="p">,</span> <span class="c">#h</span>
+                            <span class="s">&quot;35&quot;</span><span class="p">:</span> <span class="s">&quot;Lynx&quot;</span><span class="p">,</span> <span class="c">#i</span>
+                            <span class="s">&quot;36&quot;</span><span class="p">:</span> <span class="s">&quot;Cancer&quot;</span><span class="p">,</span> <span class="c">#j</span>
+                            <span class="s">&quot;37&quot;</span><span class="p">:</span> <span class="s">&quot;Sextans&quot;</span><span class="p">,</span> <span class="c">#k</span>
+                            <span class="s">&quot;38&quot;</span><span class="p">:</span> <span class="s">&quot;Leo Minor&quot;</span><span class="p">,</span> <span class="c">#l</span>
+                            <span class="s">&quot;39&quot;</span><span class="p">:</span> <span class="s">&quot;Leo&quot;</span> <span class="c">#m</span>
+    <span class="p">}</span>
+
+    <span class="n">address_symbol_font_character</span> <span class="o">=</span> <span class="p">{</span> <span class="c">#mappings of address symbol to font character</span>
+        <span class="s">&quot;1&quot;</span><span class="p">:</span><span class="s">&quot;A&quot;</span><span class="p">,</span>
+        <span class="s">&quot;2&quot;</span><span class="p">:</span><span class="s">&quot;B&quot;</span><span class="p">,</span>
+        <span class="s">&quot;3&quot;</span><span class="p">:</span><span class="s">&quot;C&quot;</span><span class="p">,</span>
+        <span class="s">&quot;4&quot;</span><span class="p">:</span><span class="s">&quot;D&quot;</span><span class="p">,</span>
+        <span class="s">&quot;5&quot;</span><span class="p">:</span><span class="s">&quot;E&quot;</span><span class="p">,</span>
+        <span class="s">&quot;6&quot;</span><span class="p">:</span><span class="s">&quot;F&quot;</span><span class="p">,</span>
+        <span class="s">&quot;7&quot;</span><span class="p">:</span><span class="s">&quot;G&quot;</span><span class="p">,</span>
+        <span class="s">&quot;8&quot;</span><span class="p">:</span><span class="s">&quot;H&quot;</span><span class="p">,</span>
+        <span class="s">&quot;9&quot;</span><span class="p">:</span><span class="s">&quot;I&quot;</span><span class="p">,</span>
+        <span class="s">&quot;10&quot;</span><span class="p">:</span><span class="s">&quot;J&quot;</span><span class="p">,</span>
+        <span class="s">&quot;11&quot;</span><span class="p">:</span><span class="s">&quot;K&quot;</span><span class="p">,</span>
+        <span class="s">&quot;12&quot;</span><span class="p">:</span><span class="s">&quot;L&quot;</span><span class="p">,</span>
+        <span class="s">&quot;13&quot;</span><span class="p">:</span><span class="s">&quot;M&quot;</span><span class="p">,</span>
+        <span class="s">&quot;14&quot;</span><span class="p">:</span><span class="s">&quot;N&quot;</span><span class="p">,</span>
+        <span class="s">&quot;15&quot;</span><span class="p">:</span><span class="s">&quot;O&quot;</span><span class="p">,</span>
+        <span class="s">&quot;16&quot;</span><span class="p">:</span><span class="s">&quot;P&quot;</span><span class="p">,</span>
+        <span class="s">&quot;17&quot;</span><span class="p">:</span><span class="s">&quot;Q&quot;</span><span class="p">,</span>
+        <span class="s">&quot;18&quot;</span><span class="p">:</span><span class="s">&quot;R&quot;</span><span class="p">,</span>
+        <span class="s">&quot;19&quot;</span><span class="p">:</span><span class="s">&quot;S&quot;</span><span class="p">,</span>
+        <span class="s">&quot;20&quot;</span><span class="p">:</span><span class="s">&quot;T&quot;</span><span class="p">,</span>
+        <span class="s">&quot;21&quot;</span><span class="p">:</span><span class="s">&quot;U&quot;</span><span class="p">,</span>
+        <span class="s">&quot;22&quot;</span><span class="p">:</span><span class="s">&quot;V&quot;</span><span class="p">,</span>
+        <span class="s">&quot;23&quot;</span><span class="p">:</span><span class="s">&quot;W&quot;</span><span class="p">,</span>
+        <span class="s">&quot;24&quot;</span><span class="p">:</span><span class="s">&quot;X&quot;</span><span class="p">,</span>
+        <span class="s">&quot;25&quot;</span><span class="p">:</span><span class="s">&quot;Y&quot;</span><span class="p">,</span>
+        <span class="s">&quot;26&quot;</span><span class="p">:</span><span class="s">&quot;Z&quot;</span><span class="p">,</span>
+        <span class="s">&quot;27&quot;</span><span class="p">:</span><span class="s">&quot;a&quot;</span><span class="p">,</span>
+        <span class="s">&quot;28&quot;</span><span class="p">:</span><span class="s">&quot;b&quot;</span><span class="p">,</span>
+        <span class="s">&quot;29&quot;</span><span class="p">:</span><span class="s">&quot;c&quot;</span><span class="p">,</span>
+        <span class="s">&quot;30&quot;</span><span class="p">:</span><span class="s">&quot;d&quot;</span><span class="p">,</span>
+        <span class="s">&quot;31&quot;</span><span class="p">:</span><span class="s">&quot;e&quot;</span><span class="p">,</span>
+        <span class="s">&quot;32&quot;</span><span class="p">:</span><span class="s">&quot;f&quot;</span><span class="p">,</span>
+        <span class="s">&quot;33&quot;</span><span class="p">:</span><span class="s">&quot;g&quot;</span><span class="p">,</span>
+        <span class="s">&quot;34&quot;</span><span class="p">:</span><span class="s">&quot;h&quot;</span><span class="p">,</span>
+        <span class="s">&quot;35&quot;</span><span class="p">:</span><span class="s">&quot;i&quot;</span><span class="p">,</span>
+        <span class="s">&quot;36&quot;</span><span class="p">:</span><span class="s">&quot;j&quot;</span><span class="p">,</span>
+        <span class="s">&quot;37&quot;</span><span class="p">:</span><span class="s">&quot;k&quot;</span><span class="p">,</span>
+        <span class="s">&quot;38&quot;</span><span class="p">:</span><span class="s">&quot;l&quot;</span><span class="p">,</span>
+        <span class="s">&quot;39&quot;</span><span class="p">:</span><span class="s">&quot;m&quot;</span>
+
+    <span class="p">}</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../../../index.html">sgdialer RC1 documentation</a> &raquo;</li>
+          <li><a href="../../../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Michael Andrew.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -2,6 +2,9 @@ __author__ = 'Michael Andrew michael@hazardmedia.co.nz'
 
 
 class Config(object):
+    """ Config class """
+    sound_path = 'assets/sounds' #path from src folder to sound assets
+
     point_of_origin_code = 0 #index of the point of origin
 
     address_data_file_path = "data/addresses.xml" #path from src folder to data file for stargate addresses

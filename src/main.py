@@ -6,6 +6,5 @@ from nz.co.hazardmedia.sgdialer.controllers.AppController import AppController
 
 if __name__ == "__main__":
 
-    #print AppController
     theApp = AppController()
     theApp.on_execute()

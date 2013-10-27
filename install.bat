@@ -18,6 +18,10 @@ IF ERRORLEVEL == 1 GOTO RUN_INSTALL
 ECHO.
 ECHO Installing dependencies...
 ECHO.
+c:\Python27\Scripts\pip.exe install sphinx
+c:\Python27\Scripts\pip.exe install docutils
+c:\Python27\Scripts\pip.exe install jinja2
+c:\Python27\Scripts\pip.exe install pygments
 c:\Python27\Scripts\pip.exe install xmltodict
 ECHO.
 PAUSE
