@@ -51,38 +51,90 @@
   <h1>Source code for nz.co.hazardmedia.sgdialer.controllers.SoundController</h1><div class="highlight"><pre>
 <span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Michael Andrew michael@hazardmedia.co.nz&#39;</span>
 
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">pygame</span>
 <span class="kn">from</span> <span class="nn">pygame</span> <span class="kn">import</span> <span class="n">mixer</span>
-<span class="kn">from</span> <span class="nn">pygame.mixer</span> <span class="kn">import</span> <span class="n">Channel</span>
 <span class="kn">from</span> <span class="nn">pygame.mixer</span> <span class="kn">import</span> <span class="n">Sound</span>
 <span class="kn">from</span> <span class="nn">nz.co.hazardmedia.sgdialer.config.Config</span> <span class="kn">import</span> <span class="n">Config</span>
+<span class="kn">from</span> <span class="nn">nz.co.hazardmedia.sgdialer.models.SoundModel</span> <span class="kn">import</span> <span class="n">SoundModel</span>
 
 
 <div class="viewcode-block" id="SoundController"><a class="viewcode-back" href="../../../../../../nz.co.hazardmedia.sgdialer.controllers.html#nz.co.hazardmedia.sgdialer.controllers.SoundController.SoundController">[docs]</a><span class="k">class</span> <span class="nc">SoundController</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-
-    <span class="n">sounds</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">sounds</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
         <span class="n">mixer</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="mi">44100</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">channel1</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">channel2</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">channel3</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">channel4</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">channel5</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">channel6</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">channel7</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">channel8</span> <span class="o">=</span> <span class="n">Channel</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;self.channel1 = Channel(0)</span>
+<span class="sd">        self.channel2 = Channel(1)</span>
+<span class="sd">        self.channel3 = Channel(2)</span>
+<span class="sd">        self.channel4 = Channel(3)</span>
+<span class="sd">        self.channel5 = Channel(4)</span>
+<span class="sd">        self.channel6 = Channel(5)</span>
+<span class="sd">        self.channel7 = Channel(6)</span>
+<span class="sd">        self.channel8 = Channel(7)&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="SoundController.preload_sounds"><a class="viewcode-back" href="../../../../../../nz.co.hazardmedia.sgdialer.controllers.html#nz.co.hazardmedia.sgdialer.controllers.SoundController.SoundController.preload_sounds">[docs]</a>    <span class="k">def</span> <span class="nf">preload_sounds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_names</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">mixer</span><span class="o">.</span><span class="n">get_init</span><span class="p">():</span>
+            <span class="k">print</span> <span class="s">&quot;Mixer initialized.&quot;</span>
+
+        <span class="k">print</span> <span class="s">&quot;SoundController initialized.&quot;</span>
+
+<div class="viewcode-block" id="SoundController.preload_sounds"><a class="viewcode-back" href="../../../../../../nz.co.hazardmedia.sgdialer.controllers.html#nz.co.hazardmedia.sgdialer.controllers.SoundController.SoundController.preload_sounds">[docs]</a>    <span class="k">def</span> <span class="nf">preload_sounds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Preload sounds</span>
-<span class="sd">        @param file_names: Dictionary of file names, where the key is the of the file as a string</span>
+<span class="sd">        Preload Sounds</span>
+
+<span class="sd">        :param file_names: Dictionary of file names, where the key is the ID of the file as a string</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">file_names</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">sounds</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">Sound</span><span class="p">(</span><span class="n">Config</span><span class="o">.</span><span class="n">sound_path</span><span class="o">+</span><span class="s">&#39;/&#39;</span><span class="o">+</span><span class="n">file_names</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">sound_path</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">files</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s">&quot;file_name&quot;</span><span class="p">]</span>
+            <span class="k">print</span> <span class="s">&quot;Preloading sound from path: &quot;</span> <span class="o">+</span> <span class="n">path</span>
+
+            <span class="c">#if delay key does not exist set its default value</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="s">&quot;delay&quot;</span> <span class="ow">in</span> <span class="n">files</span><span class="p">[</span><span class="n">key</span><span class="p">]:</span>
+                <span class="n">files</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s">&quot;delay&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="s">&quot;delay_min&quot;</span> <span class="ow">in</span> <span class="n">files</span><span class="p">[</span><span class="n">key</span><span class="p">]:</span>
+                <span class="n">files</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s">&quot;delay_min&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="s">&quot;delay_max&quot;</span> <span class="ow">in</span> <span class="n">files</span><span class="p">[</span><span class="n">key</span><span class="p">]:</span>
+                <span class="n">files</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s">&quot;delay_max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">sounds</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">SoundModel</span><span class="p">(</span><span class="n">Sound</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="n">path</span><span class="p">,</span> <span class="n">files</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s">&quot;delay&quot;</span><span class="p">],</span> <span class="n">files</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s">&quot;delay_min&quot;</span><span class="p">],</span>
+                                          <span class="n">files</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s">&quot;delay_max&quot;</span><span class="p">])</span>
 </div>
-<div class="viewcode-block" id="SoundController.play"><a class="viewcode-back" href="../../../../../../nz.co.hazardmedia.sgdialer.controllers.html#nz.co.hazardmedia.sgdialer.controllers.SoundController.SoundController.play">[docs]</a>    <span class="k">def</span> <span class="nf">play</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">channel</span><span class="p">):</span>
-        <span class="n">channel</span> <span class="o">=</span> <span class="n">mixer</span><span class="o">.</span><span class="n">find_channel</span><span class="p">()</span>
+<div class="viewcode-block" id="SoundController.play"><a class="viewcode-back" href="../../../../../../nz.co.hazardmedia.sgdialer.controllers.html#nz.co.hazardmedia.sgdialer.controllers.SoundController.SoundController.play">[docs]</a>    <span class="k">def</span> <span class="nf">play</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">queue_sounds</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">play_next_queued_sound</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">mixer</span><span class="o">.</span><span class="n">get_init</span><span class="p">():</span>
+            <span class="k">print</span> <span class="s">&quot;Mixer not initialized! Cannot play sound.&quot;</span>
+
+        <span class="c">#channel = mixer.find_channel()</span>
+        <span class="c">#channel.play(self.sounds[id])</span>
+
+        <span class="n">sound_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sounds</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">queue_sounds</span><span class="p">:</span>
+            <span class="n">mixer</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">sound_item</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+            <span class="n">mixer</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">queue</span><span class="p">(</span><span class="n">sound_item</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+            <span class="k">print</span> <span class="s">&quot;Queued sound: &quot;</span> <span class="o">+</span> <span class="n">name</span>
+            <span class="k">if</span> <span class="n">play_next_queued_sound</span><span class="p">:</span>
+                <span class="n">mixer</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">play</span><span class="p">()</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="n">sound_item</span><span class="o">.</span><span class="n">delay</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">sound_item</span><span class="o">.</span><span class="n">delay</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">sound_item</span><span class="o">.</span><span class="n">delay_min</span> <span class="o">==</span> <span class="n">sound_item</span><span class="o">.</span><span class="n">delay_max</span><span class="p">:</span>
+                <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">sound_item</span><span class="o">.</span><span class="n">delay_min</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">sound_item</span><span class="o">.</span><span class="n">delay_min</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">sound_item</span><span class="o">.</span><span class="n">delay_max</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">rand</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="n">sound_item</span><span class="o">.</span><span class="n">delay_min</span><span class="p">,</span> <span class="n">sound_item</span><span class="o">.</span><span class="n">delay_max</span><span class="p">,</span> <span class="mi">250</span><span class="p">)</span>
+                <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">rand</span><span class="p">)</span>
+
+            <span class="n">sound_item</span><span class="o">.</span><span class="n">sound</span><span class="o">.</span><span class="n">play</span><span class="p">()</span>
+
+            <span class="k">print</span> <span class="s">&quot;Playing sound: &quot;</span> <span class="o">+</span> <span class="n">name</span>
 </pre></div></div></div>
 
           </div>

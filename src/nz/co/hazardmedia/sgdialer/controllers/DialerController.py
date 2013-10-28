@@ -1,8 +1,12 @@
 __author__ = 'Michael Andrew michael@hazardmedia.co.nz'
 
+
+import pygame
+from pygame import event
+from pygame.event import Event
+
 from nz.co.hazardmedia.sgdialer.controllers.ChevronController import ChevronController
 from nz.co.hazardmedia.sgdialer.models.AddressBookModel import AddressBookModel
-from nz.co.hazardmedia.sgdialer.controllers.SoundController import SoundController
 
 
 class DialerController(object):
@@ -18,7 +22,7 @@ class DialerController(object):
         #self.prompt_address_input()
         #27-7-15-32-12-30
         #dial abydos
-        self.dial(27, 7, 15, 32, 12, 30, 1)
+
 
     def prompt_address_input(self, type="command-line"):
 
@@ -42,13 +46,16 @@ class DialerController(object):
 
         self.dial(symbol1, symbol2, symbol3, symbol4, symbol5, symbol6, symbol7, symbol8, symbol9)
 
-    def dial(self, symbol1, symbol2, symbol3, symbol4, symbol5, symbol6, symbol7, symbol8='', symbol9=''):
+    def dial_auto(self, symbol1, symbol2, symbol3, symbol4, symbol5, symbol6, symbol7, symbol8='', symbol9=''):
 
         print "Dialing " + str(symbol1) + "-" + str(symbol2) + "-" + str(symbol3) + "-" + str(symbol4) + "-" + \
               str(symbol5) + "-" + str(symbol6) + "-" + str(symbol7) + "-" + str(symbol8) + "-" + str(symbol9)
 
+        last_symbol = False
         success = True
+
         for address in self.address_book_model.addresses:
+
             if address.symbol1.code != symbol1:
                 success = False
 
@@ -72,8 +79,50 @@ class DialerController(object):
 
             if symbol8 != '' and address.symbol8.code != symbol8:
                 success = False
+                if symbol9 == '':
+                    last_symbol = True
 
             if symbol9 != '' and address.symbol9.code != symbol9:
                 success = False
+
+        dial_symbols = [symbol1, symbol2, symbol3, symbol4, symbol5, symbol6, symbol7]
+
+        if symbol8 != '':
+            dial_symbols.append(symbol8)
+
+        if symbol9 != '':
+            dial_symbols.append(symbol9)
+
+        for dial_symbol in dial_symbols:
+
+            if dial_symbols[len(dial_symbols)-1] == dial_symbol:
+                last_symbol = True
+
+            event.post(Event(pygame.USEREVENT, {
+                "userevent_type": "sound",
+                "value": "dhd-button-press-auto"
+            }))
+
+            if success and last_symbol:
+                event.post(Event(pygame.USEREVENT, {
+                    "userevent_type": "sound-queued",
+                    "value": "gate-engage"
+                }))
+
+            elif not success and last_symbol:
+                event.post(Event(pygame.USEREVENT, {
+                    "userevent_type": "sound-queued",
+                    "value": "no-engage"
+                }))
+
+            else:
+                event.post(Event(pygame.USEREVENT, {
+                    "userevent_type": "sound-queued",
+                    "value": "gate-dial-single"
+                }))
+
+            if last_symbol:
+                break
+
 
         print "Dialing success: "+str(success)
