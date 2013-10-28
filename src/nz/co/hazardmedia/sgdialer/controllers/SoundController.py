@@ -6,9 +6,12 @@ from pygame import mixer
 from pygame.mixer import Sound
 from nz.co.hazardmedia.sgdialer.config.Config import Config
 from nz.co.hazardmedia.sgdialer.models.SoundModel import SoundModel
+from nz.co.hazardmedia.sgdialer.events.EventType import EventType
 
 
 class SoundController(object):
+
+
     sounds = {}
 
     def __init__(self):
@@ -52,7 +55,7 @@ class SoundController(object):
             self.sounds[key] = SoundModel(Sound(path), path, files[key]["delay"], files[key]["delay_min"],
                                           files[key]["delay_max"])
 
-    def play(self, name, queue_sounds=False, play_next_queued_sound=False):
+    def play(self, name, queue_sounds=False, play_next_queued_sound=False, loop_forever=False):
 
         if not mixer.get_init():
             print "Mixer not initialized! Cannot play sound."
@@ -66,12 +69,17 @@ class SoundController(object):
             if mixer.music.get_busy():
                 mixer.music.queue(sound_item.path)
                 print "Queued sound: " + name
+
                 if play_next_queued_sound:
                     mixer.music.play()
 
             else:
                 mixer.music.load(sound_item.path)
-                mixer.music.play()
+                if loop_forever:
+                    mixer.music.play(-1)
+                else:
+                    mixer.music.play()
+
                 print "Playing sound: " + name
 
 
@@ -88,9 +96,24 @@ class SoundController(object):
                 rand = random.randrange(sound_item.delay_min, sound_item.delay_max, 250)
                 pygame.time.wait(rand)
 
-            sound_item.sound.play()
+            if loop_forever:
+                sound_item.sound.play(-1)
+            else:
+                sound_item.sound.play()
+
 
             print "Playing sound: " + name
+
+    def play_when_idle(self, name, loop_forever=False):
+        mixer.music.set_endevent(EventType.SOUND_PLAYBACK_ENDED)
+
+        while True:
+            for event in pygame.event.get():
+
+                if event.type == EventType.SOUND_PLAYBACK_ENDED:
+                    print("Sound playback ended")
+                    mixer.music.set_endevent()
+                    self.play(name, False, False, loop_forever)
 
 
 

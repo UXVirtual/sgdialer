@@ -1,6 +1,5 @@
 __author__ = 'Michael Andrew michael@hazardmedia.co.nz'
 
-
 class Config(object):
     """ Config class """
     sound_path = 'assets/sounds' #path from src folder to sound assets

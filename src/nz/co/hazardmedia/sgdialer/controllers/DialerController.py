@@ -7,6 +7,8 @@ from pygame.event import Event
 
 from nz.co.hazardmedia.sgdialer.controllers.ChevronController import ChevronController
 from nz.co.hazardmedia.sgdialer.models.AddressBookModel import AddressBookModel
+from nz.co.hazardmedia.sgdialer.models.SymbolModel import SymbolModel
+from nz.co.hazardmedia.sgdialer.events.EventType import EventType
 
 
 class DialerController(object):
@@ -56,34 +58,64 @@ class DialerController(object):
 
         for address in self.address_book_model.addresses:
 
-            if address.symbol1.code != symbol1:
+            success = True
+
+            #automatically set final symbol to symbol with code 1 as the terminator
+            if address.symbol7 == None and address.symbol8 == None and address.symbol9 == None:
+                address.symbol7 = SymbolModel("1")
+
+            elif address.symbol8 == None and address.symbol9 == None:
+                address.symbol8 = SymbolModel("1")
+
+            elif address.symbol9 == None:
+                address.symbol9 = SymbolModel("1")
+
+            check_string = "Check address: "+str(address.symbol1.code)+"-"+str(address.symbol2.code)+"-"+str(address.symbol3.code)+"-"\
+                           +str(address.symbol4.code)+"-"+str(address.symbol5.code)+"-"+str(address.symbol6.code)+"-"
+
+            if address.symbol7 is not None:
+                check_string += address.symbol7.code+"-"
+
+            if address.symbol8 is not None:
+                check_string += address.symbol8.code+"-"
+
+            if address.symbol9 is not None:
+                check_string += address.symbol9.code
+
+            print check_string
+
+            print "against address: "+str(symbol1)+"-"+str(symbol2)+"-"+str(symbol3)+"-"+str(symbol4)+"-"+str(symbol5)+\
+                  "-"+str(symbol6)+"-"+str(symbol7)+"-"+str(symbol8)+"-"+str(symbol9)
+
+            #match entered symbols against gate addresses
+            if str(address.symbol1.code) == str(symbol1) and str(address.symbol2.code) == str(symbol2) and str(address.symbol3.code) == str(symbol3) and str(address.symbol4.code) == str(symbol4) and str(address.symbol4.code) == str(symbol4) and str(address.symbol5.code) == str(symbol5) and str(address.symbol6.code) == str(symbol6):
+                pass
+            else:
                 success = False
 
-            if address.symbol2.code != symbol2:
+            if (address.symbol7 is not None and symbol7 != '') and str(address.symbol7.code) == str(symbol7):
+                pass
+            elif address.symbol7 is None and symbol7 == '':
+                pass
+            else:
                 success = False
 
-            if address.symbol3.code != symbol3:
+            if (address.symbol8 is not None and symbol8 != '') and str(address.symbol8.code) == str(symbol8):
+                pass
+            elif address.symbol8 is None and symbol8 == '':
+                pass
+            else:
                 success = False
 
-            if address.symbol4.code != symbol4:
+            if (address.symbol9 is not None and symbol9 != '') and str(address.symbol9.code) == str(symbol9):
+                pass
+            elif address.symbol9 is None and symbol9 == '':
+                pass
+            else:
                 success = False
 
-            if address.symbol5.code != symbol5:
-                success = False
-
-            if address.symbol6.code != symbol6:
-                success = False
-
-            if (address.symbol7 is not None and address.symbol7.code != symbol7) or address.symbol7 == 1:
-                success = False
-
-            if symbol8 != '' and address.symbol8.code != symbol8:
-                success = False
-                if symbol9 == '':
-                    last_symbol = True
-
-            if symbol9 != '' and address.symbol9.code != symbol9:
-                success = False
+            if success:
+                break
 
         dial_symbols = [symbol1, symbol2, symbol3, symbol4, symbol5, symbol6, symbol7]
 
@@ -98,25 +130,26 @@ class DialerController(object):
             if dial_symbols[len(dial_symbols)-1] == dial_symbol:
                 last_symbol = True
 
-            event.post(Event(pygame.USEREVENT, {
-                "userevent_type": "sound",
+            event.post(Event(EventType.SOUND_PLAY, {
                 "value": "dhd-button-press-auto"
             }))
 
             if success and last_symbol:
-                event.post(Event(pygame.USEREVENT, {
-                    "userevent_type": "sound-queued",
+                event.post(Event(EventType.SOUND_ADD_TO_QUEUE, {
                     "value": "gate-engage"
                 }))
 
+                event.post(Event(EventType.SOUND_LOOPING_PLAY_WHEN_IDLE, {
+                    "value": "gate-loop"
+                }))
+
             elif not success and last_symbol:
-                event.post(Event(pygame.USEREVENT, {
-                    "userevent_type": "sound-queued",
+                event.post(Event(EventType.SOUND_ADD_TO_QUEUE, {
                     "value": "gate-no-engage"
                 }))
 
             else:
-                event.post(Event(pygame.USEREVENT, {
+                event.post(Event(EventType.SOUND_ADD_TO_QUEUE, {
                     "userevent_type": "sound-queued",
                     "value": "gate-dial-single"
                 }))

@@ -6,11 +6,12 @@ from nz.co.hazardmedia.sgdialer.config.Config import Config
 class SymbolModel(object):
 
     name = ""
-    code = None
+    code = ""
+    character_code = None
     font_code = ""
 
     def __init__(self, code):
-        self.character_code = code
+        self.code = code
 
         #print "Character code: "+code
 

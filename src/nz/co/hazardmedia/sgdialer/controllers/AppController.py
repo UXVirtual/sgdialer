@@ -4,6 +4,7 @@ import pygame
 from pygame.event import Event
 from nz.co.hazardmedia.sgdialer.controllers.DialerController import DialerController
 from nz.co.hazardmedia.sgdialer.controllers.SoundController import SoundController
+from nz.co.hazardmedia.sgdialer.events.EventType import EventType
 
 
 class AppController:
@@ -32,6 +33,7 @@ class AppController:
         })
 
         self.dialer_controller.dial_auto(27, 7, 15, 32, 12, 30, 1)
+        #self.dialer_controller.dial_auto(27, 7, 15, 32, 12, 29, 1)
 
         #self.sound_controller.play("button-dial")
 
@@ -43,12 +45,17 @@ class AppController:
         if event.type == pygame.QUIT:
             self._running = False
 
-        if event.type == pygame.USEREVENT:
-            if event.userevent_type == "sound":
-                self.sound_controller.play(event.value)
+        if event.type == EventType.SOUND_PLAY:
+            self.sound_controller.play(event.value)
 
-            elif event.userevent_type == "sound-queued":
-                self.sound_controller.play(event.value, True, True)
+        elif event.type == EventType.SOUND_ADD_TO_QUEUE:
+            self.sound_controller.play(event.value, True, True)
+
+        elif event.type == EventType.SOUND_LOOPING_PLAY_WHEN_IDLE:
+            self.sound_controller.play_when_idle(event.value, True)
+
+        elif event.type == EventType.SOUND_PLAY_WHEN_IDLE:
+            self.sound_controller.play_when_idle(event.value)
 
     def on_loop(self):
         pass

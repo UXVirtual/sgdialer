@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nz.co.hazardmedia.sgdialer.models.SymbolModel &mdash; sgdialer RC1 documentation</title>
+    <title>nz.co.hazardmedia.sgdialer.events.EventType &mdash; sgdialer RC1 documentation</title>
     
     <link rel="stylesheet" href="../../../../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
@@ -48,28 +48,19 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <h1>Source code for nz.co.hazardmedia.sgdialer.models.SymbolModel</h1><div class="highlight"><pre>
+  <h1>Source code for nz.co.hazardmedia.sgdialer.events.EventType</h1><div class="highlight"><pre>
 <span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Michael Andrew michael@hazardmedia.co.nz&#39;</span>
 
-<span class="kn">from</span> <span class="nn">nz.co.hazardmedia.sgdialer.config.Config</span> <span class="kn">import</span> <span class="n">Config</span>
+<span class="kn">import</span> <span class="nn">pygame</span>
 
 
-<div class="viewcode-block" id="SymbolModel"><a class="viewcode-back" href="../../../../../../nz.co.hazardmedia.sgdialer.models.html#nz.co.hazardmedia.sgdialer.models.SymbolModel.SymbolModel">[docs]</a><span class="k">class</span> <span class="nc">SymbolModel</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="EventType"><a class="viewcode-back" href="../../../../../../nz.co.hazardmedia.sgdialer.events.html#nz.co.hazardmedia.sgdialer.events.EventType.EventType">[docs]</a><span class="k">class</span> <span class="nc">EventType</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
-    <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
-    <span class="n">code</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
-    <span class="n">character_code</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="n">font_code</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="n">code</span>
-
-        <span class="c">#print &quot;Character code: &quot;+code</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">address_symbol_names</span><span class="p">[</span><span class="n">code</span><span class="p">]</span>
-        <span class="c">#self.font_code = Config.address_symbol_names[code]</span>
-
-        <span class="k">print</span> <span class="s">&quot;Symbol name: &quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span></div>
+    <span class="n">SOUND_PLAYBACK_ENDED</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">USEREVENT</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">SOUND_PLAY</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">USEREVENT</span> <span class="o">+</span> <span class="mi">2</span>
+    <span class="n">SOUND_ADD_TO_QUEUE</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">USEREVENT</span> <span class="o">+</span> <span class="mi">3</span>
+    <span class="n">SOUND_LOOPING_PLAY_WHEN_IDLE</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">USEREVENT</span> <span class="o">+</span> <span class="mi">4</span>
+    <span class="n">SOUND_PLAY_WHEN_IDLE</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">USEREVENT</span> <span class="o">+</span> <span class="mi">5</span></div>
 </pre></div>
 
           </div>
