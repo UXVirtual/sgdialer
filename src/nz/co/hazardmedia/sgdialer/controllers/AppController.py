@@ -27,7 +27,7 @@ class AppController:
             "dhd-button-press": {"file_name": "dhd-button.wav"},
             "gate-dial-single": {"file_name": "gate-dial.wav"},
             "gate-engage": {"file_name": "dhd-kawoosh-amp.wav"},
-            "button-no-engage": {"file_name": "cancel1.wav"},
+            "gate-no-engage": {"file_name": "cancel1.wav"},
             "gate-loop": {"file_name": "singlepuddle.wav"}
         })
 

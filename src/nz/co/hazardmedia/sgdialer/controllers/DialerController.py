@@ -112,7 +112,7 @@ class DialerController(object):
             elif not success and last_symbol:
                 event.post(Event(pygame.USEREVENT, {
                     "userevent_type": "sound-queued",
-                    "value": "no-engage"
+                    "value": "gate-no-engage"
                 }))
 
             else:

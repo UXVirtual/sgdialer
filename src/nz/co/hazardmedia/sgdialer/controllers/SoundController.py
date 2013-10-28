@@ -63,12 +63,19 @@ class SoundController(object):
         sound_item = self.sounds[name]
 
         if queue_sounds:
-            mixer.music.load(sound_item.path)
-            mixer.music.queue(sound_item.path)
-            print "Queued sound: " + name
-            if play_next_queued_sound:
+            if mixer.music.get_busy():
+                mixer.music.queue(sound_item.path)
+                print "Queued sound: " + name
+                if play_next_queued_sound:
+                    mixer.music.play()
+
+            else:
+                mixer.music.load(sound_item.path)
                 mixer.music.play()
-            pass
+                print "Playing sound: " + name
+
+
+
         else:
 
             if sound_item.delay > 0:
