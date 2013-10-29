@@ -10,13 +10,12 @@ from nz.co.hazardmedia.sgdialer.events.EventType import EventType
 
 
 class SoundController(object):
-
-
     sounds = {}
 
     def __init__(self):
 
-        mixer.init(44100)
+        pygame.mixer.pre_init(44100, -16, 2, 2048)
+        pygame.mixer.init()
 
         """self.channel1 = Channel(0)
         self.channel2 = Channel(1)
@@ -36,7 +35,8 @@ class SoundController(object):
         """
         Preload Sounds
 
-        :param file_names: Dictionary of file names, where the key is the ID of the file as a string
+        :param files: Dictionary of file objects in the format {"file_name": "name", "delay": 1000, "delay_min": 1000,
+        "delay_max": 1000} where the key is the ID of the file as a string
         """
         for key in files:
             path = Config.sound_path + '/' + files[key]["file_name"]
@@ -82,38 +82,53 @@ class SoundController(object):
 
                 print "Playing sound: " + name
 
-
-
         else:
 
+            if loop_forever:
+                loops = -1
+            else:
+                loops = 0
+
             if sound_item.delay > 0:
-                pygame.time.wait(sound_item.delay)
+                #pygame.time.wait(sound_item.delay)
+                self.play_after_delay(sound_item.sound, sound_item.delay, loops)
 
             elif sound_item.delay_min == sound_item.delay_max:
-                pygame.time.wait(sound_item.delay_min)
+                self.play_after_delay(sound_item.sound, sound_item.delay_min, loops)
+                #pygame.time.wait(sound_item.delay_min)
 
             elif sound_item.delay_min > 0 and sound_item.delay_max > 0:
                 rand = random.randrange(sound_item.delay_min, sound_item.delay_max, 250)
-                pygame.time.wait(rand)
+                #pygame.time.wait(rand)
+                self.play_after_delay(sound_item.sound, rand, loops)
 
-            if loop_forever:
-                sound_item.sound.play(-1)
-            else:
-                sound_item.sound.play()
 
 
             print "Playing sound: " + name
 
+    def play_after_delay(self, sound, delay=1000, loops=0):
+
+        pygame.time.set_timer(EventType.SOUND_PLAY_AFTER_DELAY, delay)
+
+        got_event = False
+        while not got_event:
+            for event in pygame.event.get():
+
+                if event.type == EventType.SOUND_PLAY_AFTER_DELAY:
+                    sound.play(loops)
+                    got_event = True
+                    break
+
     def play_when_idle(self, name, loop_forever=False):
         mixer.music.set_endevent(EventType.SOUND_PLAYBACK_ENDED)
 
-        while True:
+        got_event = False
+        while not got_event:
             for event in pygame.event.get():
 
                 if event.type == EventType.SOUND_PLAYBACK_ENDED:
                     print("Sound playback ended")
                     mixer.music.set_endevent()
                     self.play(name, False, False, loop_forever)
-
-
-
+                    got_event = True
+                    break

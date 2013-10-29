@@ -25,6 +25,7 @@ class AppController:
         #init sounds
         self.sound_controller.preload_sounds({
             "dhd-button-press-auto": {"file_name": "dhd-button.wav", "delay_min": 1000, "delay_max": 3000},
+            #"dhd-button-press-auto": {"file_name": "dhd-button.wav", "delay": 500},
             "dhd-button-press": {"file_name": "dhd-button.wav"},
             "gate-dial-single": {"file_name": "gate-dial.wav"},
             "gate-engage": {"file_name": "dhd-kawoosh-amp.wav"},
@@ -32,8 +33,8 @@ class AppController:
             "gate-loop": {"file_name": "singlepuddle.wav"}
         })
 
-        self.dialer_controller.dial_auto(27, 7, 15, 32, 12, 30, 1)
-        #self.dialer_controller.dial_auto(27, 7, 15, 32, 12, 29, 1)
+        #self.dialer_controller.dial_auto(27, 7, 15, 32, 12, 30, 1)
+        self.dialer_controller.dial_auto(27, 7, 15, 32, 12, 29, 1)
 
         #self.sound_controller.play("button-dial")
 
