@@ -89,7 +89,10 @@ class SoundController(object):
             else:
                 loops = 0
 
-            if sound_item.delay > 0:
+            if sound_item.delay == sound_item.delay_min == sound_item.delay_max == 0:
+                sound_item.sound.play(loops)
+
+            elif sound_item.delay > 0:
                 #pygame.time.wait(sound_item.delay)
                 self.play_after_delay(sound_item.sound, sound_item.delay, loops)
 

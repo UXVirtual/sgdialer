@@ -24,7 +24,7 @@ class AppController:
 
         #init sounds
         self.sound_controller.preload_sounds({
-            "dhd-button-press-auto": {"file_name": "dhd-button.wav", "delay_min": 1000, "delay_max": 3000},
+            "dhd-button-press-auto": {"file_name": "dhd-button.wav", "delay_min": 1000, "delay_max": 1500},
             #"dhd-button-press-auto": {"file_name": "dhd-button.wav", "delay": 500},
             "dhd-button-press": {"file_name": "dhd-button.wav"},
             "gate-dial-single": {"file_name": "gate-dial.wav"},
@@ -33,10 +33,8 @@ class AppController:
             "gate-loop": {"file_name": "singlepuddle.wav"}
         })
 
-        #self.dialer_controller.dial_auto(27, 7, 15, 32, 12, 30, 1)
-        self.dialer_controller.dial_auto(27, 7, 15, 32, 12, 29, 1)
-
-        #self.sound_controller.play("button-dial")
+        self.dialer_controller.dial_auto(27, 7, 15, 32, 12, 30, 1)
+        #self.dialer_controller.dial_auto(27, 7, 15, 32, 12, 29, 1)
 
     def on_event(self, event):
         """
@@ -50,7 +48,7 @@ class AppController:
             self.sound_controller.play(event.value)
 
         elif event.type == EventType.SOUND_ADD_TO_QUEUE:
-            self.sound_controller.play(event.value, True, True)
+            self.sound_controller.play(event.value, True, False)
 
         elif event.type == EventType.SOUND_LOOPING_PLAY_WHEN_IDLE:
             self.sound_controller.play_when_idle(event.value, True)
