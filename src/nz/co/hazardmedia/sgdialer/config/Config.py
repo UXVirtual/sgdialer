@@ -11,47 +11,47 @@ class Config(object):
     #use font Stargate SG-1 Address Glyphs
     address_symbol_names = {#names of the symbols on the stargate and dhd
                             "?": "Unknown",
-                            "1": "Earth", #A
+                            "1": "Earth", #letter A, key 1
                             #point of origin (in our alternate universe the point of origin acts as a terminator and is
                             #can be the same on all DHDs)
-                            "2": "Crater", #B
-                            "3": "Virgo", #C
-                            "4": "Bootes", #D
-                            "5": "Centaurus", #E
-                            "6": "Libra", #F
-                            "7": "Serpens Caput", #G
-                            "8": "Norma", #H
-                            "9": "Scorpio", #I
-                            "10": "Cra", #J
-                            "11": "Scutum", #K
-                            "12": "Sagittarius", #L
-                            "13": "Aquila", #M
-                            "14": "Mic", #N
-                            "15": "Capricorn", #O
-                            "16": "Pisces Austrinus", #P
-                            "17": "Equuleus", #Q
-                            "18": "Aquarius", #R
-                            "19": "Pegasus", #S
-                            "20": "Sculptor", #T
-                            "21": "Pisces", #U
-                            "22": "Andromeda", #V
-                            "23": "Triangulum", #W
-                            "24": "Aries", #X
-                            "25": "Perseus", #Y
-                            "26": "Cetus", #Z
-                            "27": "Taurus", #a
-                            "28": "Auriga", #b
-                            "29": "Eridanus", #c
-                            "30": "Orion", #d
-                            "31": "Canis Minor", #e
-                            "32": "Monoceros", #f
-                            "33": "Gemini", #g
-                            "34": "Hydra", #h
-                            "35": "Lynx", #i
-                            "36": "Cancer", #j
-                            "37": "Sextans", #k
-                            "38": "Leo Minor", #l
-                            "39": "Leo" #m
+                            "2": "Crater", #letter B, key 2
+                            "3": "Virgo", #letter C, key 3
+                            "4": "Bootes", #letter D, key 4
+                            "5": "Centaurus", #letter E, key 5
+                            "6": "Libra", #letter F, key 6
+                            "7": "Serpens Caput", #letter G, key 7
+                            "8": "Norma", #letter H, key 8
+                            "9": "Scorpio", #letter I, key 9
+                            "10": "Cra", #letter J, key 0
+                            "11": "Scutum", #letter K, key - (hyphen)
+                            "12": "Sagittarius", #letter L, key q
+                            "13": "Aquila", #letter M, key w
+                            "14": "Mic", #letter N, key e
+                            "15": "Capricorn", #letter O, key r
+                            "16": "Pisces Austrinus", #letter P, key t
+                            "17": "Equuleus", #letter Q, key y
+                            "18": "Aquarius", #letter R, key u
+                            "19": "Pegasus", #letter S, key i
+                            "20": "Sculptor", #letter T, key o
+                            "21": "Pisces", #letter U, key p
+                            "22": "Andromeda", #letter V, key a
+                            "23": "Triangulum", #letter W, key s
+                            "24": "Aries", #letter X, key d
+                            "25": "Perseus", #letter Y, key f
+                            "26": "Cetus", #letter Z, key g
+                            "27": "Taurus", #letter a, key h
+                            "28": "Auriga", #letter b, key j
+                            "29": "Eridanus", #letter c, key k
+                            "30": "Orion", #letter d, key l
+                            "31": "Canis Minor", #letter e, key z
+                            "32": "Monoceros", #letter f, key x
+                            "33": "Gemini", #letter g, key c
+                            "34": "Hydra", #letter h, key v
+                            "35": "Lynx", #letter i, key b
+                            "36": "Cancer", #letter j, key n
+                            "37": "Sextans", #letter k, key m
+                            "38": "Leo Minor", #letter l, key , (comma)
+                            "39": "Leo" #letter m, key . (period)
     }
 
     address_symbol_font_character = { #mappings of address symbol to font character
