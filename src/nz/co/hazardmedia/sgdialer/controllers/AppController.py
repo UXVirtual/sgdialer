@@ -31,7 +31,8 @@ class AppController:
             "gate-dial-single": {"file_name": "gate-dial.wav"},
             "gate-engage": {"file_name": "dhd-kawoosh-amp.wav"},
             "gate-no-engage": {"file_name": "cancel1.wav"},
-            "gate-loop": {"file_name": "singlepuddle.wav"}
+            "gate-loop": {"file_name": "singlepuddle.wav"},
+            "gate-close": {"file_name": "gate-close.wav"}
         })
 
         #self.dialer_controller.dial_auto(27, 7, 15, 32, 12, 30, 1) #gate dial success
@@ -57,8 +58,11 @@ class AppController:
         elif event.type == EventType.SOUND_PLAY_WHEN_IDLE:
             self.sound_controller.play_when_idle(event.value)
 
+        elif event.type == EventType.SOUND_STOP:
+            self.sound_controller.stop(event.value)
+
         elif event.type == pygame.KEYUP:
-            self.dialer_controller.input_symbol(key.name(event.key))
+            self.dialer_controller.on_key_press(event.key)
 
     def on_loop(self):
         pass

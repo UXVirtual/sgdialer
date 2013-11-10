@@ -105,8 +105,6 @@ class SoundController(object):
                 #pygame.time.wait(rand)
                 self.play_after_delay(sound_item.sound, rand, loops)
 
-
-
             print "Playing sound: " + name
 
     def play_after_delay(self, sound, delay=1000, loops=0):
@@ -121,6 +119,14 @@ class SoundController(object):
                     sound.play(loops)
                     got_event = True
                     break
+
+    def stop(self, name):
+
+        print "Stopping sound: "+name
+
+        sound_item = self.sounds[name]
+
+        sound_item.sound.stop()
 
     def play_when_idle(self, name, loop_forever=False):
         mixer.music.set_endevent(EventType.SOUND_PLAYBACK_ENDED)
