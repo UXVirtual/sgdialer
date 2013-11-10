@@ -8,30 +8,26 @@ from pygame.event import Event
 from nz.co.hazardmedia.sgdialer.controllers.ChevronController import ChevronController
 from nz.co.hazardmedia.sgdialer.models.AddressBookModel import AddressBookModel
 from nz.co.hazardmedia.sgdialer.models.SymbolModel import SymbolModel
+from nz.co.hazardmedia.sgdialer.controllers.GateController import GateController
 from nz.co.hazardmedia.sgdialer.events.EventType import EventType
 from nz.co.hazardmedia.sgdialer.config.Config import Config
 
 
 class DialerController(object):
-    chevron_controller = None
+    gate_controller = None
     address_book_model = None
     dialed_symbols = []
     gate_active = False
     manual_input = False
 
     def __init__(self):
-        self.chevron_controller = ChevronController()
         self.address_book_model = AddressBookModel()
+        self.gate_controller = GateController()
         self.manual_input = True
         self.dialed_symbols = []
         self.gate_active = False
 
         print "DialingController initialized."
-
-        #self.prompt_address_input()
-        #self.address_input_listener()
-        #27-7-15-32-12-30
-        #dial abydos
 
     def input_symbol(self, character):
         if self.manual_input:
@@ -40,10 +36,9 @@ class DialerController(object):
 
                 self.dial_manual(symbol)
 
+    def prompt_address_input(self, input_type="command-line"):
 
-    def prompt_address_input(self, type="command-line"):
-
-        if type == "command-line":
+        if input_type == "command-line":
 
             symbol1 = raw_input("Enter 1st symbol:")
             symbol2 = raw_input("Enter 2nd symbol:")
@@ -58,10 +53,8 @@ class DialerController(object):
                 symbol9 = raw_input("Enter 9th symbol or leave blank to finish:")
             else:
                 symbol9 = ""
-        elif type == "key":
-            pass
 
-        self.dial(symbol1, symbol2, symbol3, symbol4, symbol5, symbol6, symbol7, symbol8, symbol9)
+        self.dial_auto(symbol1, symbol2, symbol3, symbol4, symbol5, symbol6, symbol7, symbol8, symbol9)
 
     def shutdown_gate(self):
 
@@ -92,16 +85,33 @@ class DialerController(object):
 
             print "Manually dialed: "+symbol
 
+            self.dialed_symbols.append(symbol)
+
             event.post(Event(EventType.SOUND_PLAY, {
                 "value": "dhd-button-press"
             }))
 
+            def callback():
+
+                if len(self.dialed_symbols) == 0:
+                    print "Gate did not engage"
+                else:
+                    self.gate_controller.lock_chevron(len(self.dialed_symbols))
+
+                    target_chevron = "chevron"+str(len(self.dialed_symbols))
+
+                    print "target Chevron: "+target_chevron
+
+                    print "Chevron "+str(len(self.dialed_symbols))+" locked: "+str(getattr(self.gate_controller, target_chevron).chevron_model.locked)
+
             event.post(Event(EventType.SOUND_ADD_TO_QUEUE, {
                 "userevent_type": "sound-queued",
-                "value": "gate-dial-single"
+                "value": "gate-dial-single"#,
+                #"callback": callback
+
             }))
 
-            self.dialed_symbols.append(symbol)
+
 
             print self.dialed_symbols
 
@@ -214,7 +224,6 @@ class DialerController(object):
                 self.dialed_symbols = []
 
             print "Dialing success: "+str(success)
-
 
     def dial_auto(self, symbol1, symbol2, symbol3, symbol4, symbol5, symbol6, symbol7, symbol8='', symbol9=''):
 

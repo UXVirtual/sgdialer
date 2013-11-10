@@ -55,7 +55,7 @@ class SoundController(object):
             self.sounds[key] = SoundModel(Sound(path), path, files[key]["delay"], files[key]["delay_min"],
                                           files[key]["delay_max"])
 
-    def play(self, name, queue_sounds=False, play_next_queued_sound=False, loop_forever=False):
+    def play(self, name, queue_sounds=False, play_next_queued_sound=False, loop_forever=False, callback=None):
 
         if not mixer.get_init():
             print "Mixer not initialized! Cannot play sound."
@@ -72,6 +72,9 @@ class SoundController(object):
 
                 if play_next_queued_sound:
                     mixer.music.play()
+                    if callback:
+                        print "Channel playback end callback defined"
+                        self.channel_playback_ended_listener(mixer.music, callback)
 
             else:
                 mixer.music.load(sound_item.path)
@@ -81,6 +84,10 @@ class SoundController(object):
                     mixer.music.play()
 
                 print "Playing sound: " + name
+
+                if callback:
+                        print "Channel playback end callback defined"
+                        self.channel_playback_ended_listener(mixer.music, callback)
 
         else:
 
@@ -139,5 +146,21 @@ class SoundController(object):
                     print("Sound playback ended")
                     mixer.music.set_endevent()
                     self.play(name, False, False, loop_forever)
+                    got_event = True
+                    break
+
+    def channel_playback_ended_listener(self, channel, callback):
+        channel.set_endevent(EventType.SOUND_PLAYBACK_ENDED_CHANNEL)
+
+        print "Listening for channel playback end"
+
+        got_event = False
+        while not got_event:
+            for event in pygame.event.get():
+
+                if event.type == EventType.SOUND_PLAYBACK_ENDED_CHANNEL:
+                    print("Sound playback ended for channel: "+str(channel))
+                    channel.set_endevent()
+                    callback()
                     got_event = True
                     break

@@ -4,26 +4,34 @@ from nz.co.hazardmedia.sgdialer.models.ChevronModel import ChevronModel
 
 
 class ChevronController(object):
-    chevron1 = None
-    chevron2 = None
-    chevron3 = None
-    chevron4 = None
-    chevron5 = None
-    chevron6 = None
-    chevron7 = None
-    chevron8 = None
-    chevron9 = None
+    chevron_model = None
+    id = 0
 
-    def __init__(self):
-        self.chevron1 = ChevronModel("Chevron 1")
-        self.chevron2 = ChevronModel("Chevron 2")
-        self.chevron3 = ChevronModel("Chevron 3")
-        self.chevron4 = ChevronModel("Chevron 4")
-        self.chevron5 = ChevronModel("Chevron 5")
-        self.chevron6 = ChevronModel("Chevron 6")
-        self.chevron7 = ChevronModel("Chevron 7")
-        self.chevron8 = ChevronModel("Chevron 8")
-        self.chevron9 = ChevronModel("Chevron 9")
+    def __init__(self, id):
+        self.id = id
+
+        if id == 1:
+            name = "Chevron 1"
+        elif id == 2:
+            name = "Chevron 2"
+        elif id == 3:
+            name = "Chevron 3"
+        elif id == 4:
+            name = "Chevron 4"
+        elif id == 5:
+            name = "Chevron 5"
+        elif id == 6:
+            name = "Chevron 6"
+        elif id == 7:
+            name = "Chevron 7"
+        elif id == 8:
+            name = "Chevron 8"
+        elif id == 9:
+            name = "Chevron 9"
+
+        self.chevron_model = ChevronModel(name)
 
         print "ChevronController initialized."
-        pass
+
+    def lock(self):
+        self.chevron_model.locked = True

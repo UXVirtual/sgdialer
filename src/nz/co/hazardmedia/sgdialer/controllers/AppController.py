@@ -50,7 +50,11 @@ class AppController:
             self.sound_controller.play(event.value)
 
         elif event.type == EventType.SOUND_ADD_TO_QUEUE:
-            self.sound_controller.play(event.value, True, False)
+
+            if hasattr(event, "callback"):
+                self.sound_controller.play(event.value, True, False, False, event.callback)
+            else:
+                self.sound_controller.play(event.value, True, False)
 
         elif event.type == EventType.SOUND_LOOPING_PLAY_WHEN_IDLE:
             self.sound_controller.play_when_idle(event.value, True)
