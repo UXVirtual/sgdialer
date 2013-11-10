@@ -29,10 +29,10 @@ class AppController:
             #"dhd-button-press-auto": {"file_name": "dhd-button.wav", "delay": 500},
             "dhd-button-press": {"file_name": "dhd-button.wav"},
             "gate-dial-single": {"file_name": "gate-dial.wav"},
-            "gate-engage": {"file_name": "dhd-kawoosh-amp.wav"},
+            "gate-engage": {"file_name": "dhd-kawoosh2.wav"},
             "gate-no-engage": {"file_name": "cancel1.wav"},
             "gate-loop": {"file_name": "singlepuddle.wav"},
-            "gate-close": {"file_name": "gate-close.wav"}
+            "gate-close": {"file_name": "gate-close3.wav"}
         })
 
         #self.dialer_controller.dial_auto(27, 7, 15, 32, 12, 30, 1) #gate dial success
