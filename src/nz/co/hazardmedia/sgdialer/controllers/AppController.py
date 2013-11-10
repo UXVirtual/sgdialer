@@ -2,6 +2,7 @@ __author__ = 'Michael Andrew michael@hazardmedia.co.nz'
 
 import pygame
 from pygame.event import Event
+from pygame import key
 from nz.co.hazardmedia.sgdialer.controllers.DialerController import DialerController
 from nz.co.hazardmedia.sgdialer.controllers.SoundController import SoundController
 from nz.co.hazardmedia.sgdialer.events.EventType import EventType
@@ -33,8 +34,8 @@ class AppController:
             "gate-loop": {"file_name": "singlepuddle.wav"}
         })
 
-        self.dialer_controller.dial_auto(27, 7, 15, 32, 12, 30, 1)
-        #self.dialer_controller.dial_auto(27, 7, 15, 32, 12, 29, 1)
+        #self.dialer_controller.dial_auto(27, 7, 15, 32, 12, 30, 1) #gate dial success
+        #self.dialer_controller.dial_auto(27, 7, 15, 32, 12, 29, 1) #gate dial failed
 
     def on_event(self, event):
         """
@@ -55,6 +56,9 @@ class AppController:
 
         elif event.type == EventType.SOUND_PLAY_WHEN_IDLE:
             self.sound_controller.play_when_idle(event.value)
+
+        elif event.type == pygame.KEYUP:
+            self.dialer_controller.input_symbol(key.name(event.key))
 
     def on_loop(self):
         pass

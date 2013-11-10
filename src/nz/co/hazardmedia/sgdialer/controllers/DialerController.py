@@ -1,7 +1,7 @@
 __author__ = 'Michael Andrew michael@hazardmedia.co.nz'
 
-
 import pygame
+from pygame import key
 from pygame import event
 from pygame.event import Event
 
@@ -9,22 +9,35 @@ from nz.co.hazardmedia.sgdialer.controllers.ChevronController import ChevronCont
 from nz.co.hazardmedia.sgdialer.models.AddressBookModel import AddressBookModel
 from nz.co.hazardmedia.sgdialer.models.SymbolModel import SymbolModel
 from nz.co.hazardmedia.sgdialer.events.EventType import EventType
+from nz.co.hazardmedia.sgdialer.config.Config import Config
 
 
 class DialerController(object):
     chevron_controller = None
     address_book_model = None
 
+    manual_input = False
+
     def __init__(self):
         self.chevron_controller = ChevronController()
         self.address_book_model = AddressBookModel()
+        self.manual_input = True
 
         print "DialingController initialized."
 
         #self.prompt_address_input()
+        #self.address_input_listener()
         #27-7-15-32-12-30
         #dial abydos
 
+    def input_symbol(self, character):
+        if self.manual_input:
+            if character in Config.address_symbol_keyboard_character:
+                symbol = Config.address_symbol_keyboard_character[character]
+                print 'Pressed symbol: '+symbol
+                event.post(Event(EventType.SOUND_PLAY, {
+                    "value": "dhd-button-press"
+                }))
 
     def prompt_address_input(self, type="command-line"):
 
