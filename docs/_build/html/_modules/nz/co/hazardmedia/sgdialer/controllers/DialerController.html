@@ -51,35 +51,45 @@
   <h1>Source code for nz.co.hazardmedia.sgdialer.controllers.DialerController</h1><div class="highlight"><pre>
 <span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Michael Andrew michael@hazardmedia.co.nz&#39;</span>
 
-
 <span class="kn">import</span> <span class="nn">pygame</span>
+<span class="kn">from</span> <span class="nn">pygame</span> <span class="kn">import</span> <span class="n">key</span>
 <span class="kn">from</span> <span class="nn">pygame</span> <span class="kn">import</span> <span class="n">event</span>
 <span class="kn">from</span> <span class="nn">pygame.event</span> <span class="kn">import</span> <span class="n">Event</span>
 
 <span class="kn">from</span> <span class="nn">nz.co.hazardmedia.sgdialer.controllers.ChevronController</span> <span class="kn">import</span> <span class="n">ChevronController</span>
 <span class="kn">from</span> <span class="nn">nz.co.hazardmedia.sgdialer.models.AddressBookModel</span> <span class="kn">import</span> <span class="n">AddressBookModel</span>
 <span class="kn">from</span> <span class="nn">nz.co.hazardmedia.sgdialer.models.SymbolModel</span> <span class="kn">import</span> <span class="n">SymbolModel</span>
+<span class="kn">from</span> <span class="nn">nz.co.hazardmedia.sgdialer.controllers.GateController</span> <span class="kn">import</span> <span class="n">GateController</span>
 <span class="kn">from</span> <span class="nn">nz.co.hazardmedia.sgdialer.events.EventType</span> <span class="kn">import</span> <span class="n">EventType</span>
+<span class="kn">from</span> <span class="nn">nz.co.hazardmedia.sgdialer.config.Config</span> <span class="kn">import</span> <span class="n">Config</span>
 
 
 <div class="viewcode-block" id="DialerController"><a class="viewcode-back" href="../../../../../../nz.co.hazardmedia.sgdialer.controllers.html#nz.co.hazardmedia.sgdialer.controllers.DialerController.DialerController">[docs]</a><span class="k">class</span> <span class="nc">DialerController</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="n">chevron_controller</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">gate_controller</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="n">address_book_model</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">dialed_symbols</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">gate_active</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">manual_input</span> <span class="o">=</span> <span class="bp">False</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">chevron_controller</span> <span class="o">=</span> <span class="n">ChevronController</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">address_book_model</span> <span class="o">=</span> <span class="n">AddressBookModel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gate_controller</span> <span class="o">=</span> <span class="n">GateController</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">manual_input</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialed_symbols</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gate_active</span> <span class="o">=</span> <span class="bp">False</span>
 
         <span class="k">print</span> <span class="s">&quot;DialingController initialized.&quot;</span>
 
-        <span class="c">#self.prompt_address_input()</span>
-        <span class="c">#27-7-15-32-12-30</span>
-        <span class="c">#dial abydos</span>
+<div class="viewcode-block" id="DialerController.input_symbol"><a class="viewcode-back" href="../../../../../../nz.co.hazardmedia.sgdialer.controllers.html#nz.co.hazardmedia.sgdialer.controllers.DialerController.DialerController.input_symbol">[docs]</a>    <span class="k">def</span> <span class="nf">input_symbol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">character</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">manual_input</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">character</span> <span class="ow">in</span> <span class="n">Config</span><span class="o">.</span><span class="n">address_symbol_keyboard_character</span><span class="p">:</span>
+                <span class="n">symbol</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">address_symbol_keyboard_character</span><span class="p">[</span><span class="n">character</span><span class="p">]</span>
 
+                <span class="bp">self</span><span class="o">.</span><span class="n">dial_manual</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="DialerController.prompt_address_input"><a class="viewcode-back" href="../../../../../../nz.co.hazardmedia.sgdialer.controllers.html#nz.co.hazardmedia.sgdialer.controllers.DialerController.DialerController.prompt_address_input">[docs]</a>    <span class="k">def</span> <span class="nf">prompt_address_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_type</span><span class="o">=</span><span class="s">&quot;command-line&quot;</span><span class="p">):</span>
 
-<div class="viewcode-block" id="DialerController.prompt_address_input"><a class="viewcode-back" href="../../../../../../nz.co.hazardmedia.sgdialer.controllers.html#nz.co.hazardmedia.sgdialer.controllers.DialerController.DialerController.prompt_address_input">[docs]</a>    <span class="k">def</span> <span class="nf">prompt_address_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;command-line&quot;</span><span class="p">):</span>
-
-        <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="s">&quot;command-line&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">input_type</span> <span class="o">==</span> <span class="s">&quot;command-line&quot;</span><span class="p">:</span>
 
             <span class="n">symbol1</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&quot;Enter 1st symbol:&quot;</span><span class="p">)</span>
             <span class="n">symbol2</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&quot;Enter 2nd symbol:&quot;</span><span class="p">)</span>
@@ -94,10 +104,177 @@
                 <span class="n">symbol9</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&quot;Enter 9th symbol or leave blank to finish:&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">symbol9</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
-        <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s">&quot;key&quot;</span><span class="p">:</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dial_auto</span><span class="p">(</span><span class="n">symbol1</span><span class="p">,</span> <span class="n">symbol2</span><span class="p">,</span> <span class="n">symbol3</span><span class="p">,</span> <span class="n">symbol4</span><span class="p">,</span> <span class="n">symbol5</span><span class="p">,</span> <span class="n">symbol6</span><span class="p">,</span> <span class="n">symbol7</span><span class="p">,</span> <span class="n">symbol8</span><span class="p">,</span> <span class="n">symbol9</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="DialerController.shutdown_gate"><a class="viewcode-back" href="../../../../../../nz.co.hazardmedia.sgdialer.controllers.html#nz.co.hazardmedia.sgdialer.controllers.DialerController.DialerController.shutdown_gate">[docs]</a>    <span class="k">def</span> <span class="nf">shutdown_gate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gate_active</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Shutting gate down&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gate_active</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dialed_symbols</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">event</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">Event</span><span class="p">(</span><span class="n">EventType</span><span class="o">.</span><span class="n">SOUND_STOP</span><span class="p">,</span> <span class="p">{</span>
+                <span class="s">&quot;value&quot;</span><span class="p">:</span> <span class="s">&quot;gate-loop&quot;</span>
+            <span class="p">}))</span>
+            <span class="n">event</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">Event</span><span class="p">(</span><span class="n">EventType</span><span class="o">.</span><span class="n">SOUND_PLAY</span><span class="p">,</span> <span class="p">{</span>
+                <span class="s">&quot;value&quot;</span><span class="p">:</span> <span class="s">&quot;gate-close&quot;</span>
+            <span class="p">}))</span>
+</div>
+<div class="viewcode-block" id="DialerController.on_key_press"><a class="viewcode-back" href="../../../../../../nz.co.hazardmedia.sgdialer.controllers.html#nz.co.hazardmedia.sgdialer.controllers.DialerController.DialerController.on_key_press">[docs]</a>    <span class="k">def</span> <span class="nf">on_key_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">key_code</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">key_code</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">K_ESCAPE</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_gate</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">gate_active</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">input_symbol</span><span class="p">(</span><span class="n">key</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="n">key_code</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="DialerController.dial_manual"><a class="viewcode-back" href="../../../../../../nz.co.hazardmedia.sgdialer.controllers.html#nz.co.hazardmedia.sgdialer.controllers.DialerController.DialerController.dial_manual">[docs]</a>    <span class="k">def</span> <span class="nf">dial_manual</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">):</span>
+
+        <span class="n">last_symbol</span> <span class="o">=</span> <span class="bp">False</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialed_symbols</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+
+            <span class="c">#inputting</span>
+
+            <span class="k">print</span> <span class="s">&quot;Manually dialed: &quot;</span><span class="o">+</span><span class="n">symbol</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">dialed_symbols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+
+            <span class="n">event</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">Event</span><span class="p">(</span><span class="n">EventType</span><span class="o">.</span><span class="n">SOUND_PLAY</span><span class="p">,</span> <span class="p">{</span>
+                <span class="s">&quot;value&quot;</span><span class="p">:</span> <span class="s">&quot;dhd-button-press&quot;</span>
+            <span class="p">}))</span>
+
+            <span class="k">def</span> <span class="nf">callback</span><span class="p">():</span>
+
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialed_symbols</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">print</span> <span class="s">&quot;Gate did not engage&quot;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">gate_controller</span><span class="o">.</span><span class="n">lock_chevron</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialed_symbols</span><span class="p">))</span>
+
+                    <span class="n">target_chevron</span> <span class="o">=</span> <span class="s">&quot;chevron&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialed_symbols</span><span class="p">))</span>
+
+                    <span class="k">print</span> <span class="s">&quot;target Chevron: &quot;</span><span class="o">+</span><span class="n">target_chevron</span>
+
+                    <span class="k">print</span> <span class="s">&quot;Chevron &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialed_symbols</span><span class="p">))</span><span class="o">+</span><span class="s">&quot; locked: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gate_controller</span><span class="p">,</span> <span class="n">target_chevron</span><span class="p">)</span><span class="o">.</span><span class="n">chevron_model</span><span class="o">.</span><span class="n">locked</span><span class="p">)</span>
+
+            <span class="n">event</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">Event</span><span class="p">(</span><span class="n">EventType</span><span class="o">.</span><span class="n">SOUND_ADD_TO_QUEUE</span><span class="p">,</span> <span class="p">{</span>
+                <span class="s">&quot;userevent_type&quot;</span><span class="p">:</span> <span class="s">&quot;sound-queued&quot;</span><span class="p">,</span>
+                <span class="s">&quot;value&quot;</span><span class="p">:</span> <span class="s">&quot;gate-dial-single&quot;</span><span class="c">#,</span>
+                <span class="c">#&quot;callback&quot;: callback</span>
+
+            <span class="p">}))</span>
+
+
+
+            <span class="k">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialed_symbols</span>
+
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span> <span class="o">==</span> <span class="s">&quot;1&quot;</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialed_symbols</span><span class="p">)</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span>
+            <span class="n">last_symbol</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="c">#finished inputting 7 symbol address</span>
+            <span class="k">print</span> <span class="s">&quot;Finished inputting 7 symbol address&quot;</span>
             <span class="k">pass</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">dial</span><span class="p">(</span><span class="n">symbol1</span><span class="p">,</span> <span class="n">symbol2</span><span class="p">,</span> <span class="n">symbol3</span><span class="p">,</span> <span class="n">symbol4</span><span class="p">,</span> <span class="n">symbol5</span><span class="p">,</span> <span class="n">symbol6</span><span class="p">,</span> <span class="n">symbol7</span><span class="p">,</span> <span class="n">symbol8</span><span class="p">,</span> <span class="n">symbol9</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">str</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span> <span class="o">==</span> <span class="s">&quot;1&quot;</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialed_symbols</span><span class="p">)</span> <span class="o">==</span> <span class="mi">8</span><span class="p">:</span>
+            <span class="n">last_symbol</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="c">#finished inputting 8 symbol address</span>
+            <span class="k">print</span> <span class="s">&quot;Finished inputting 8 symbol address&quot;</span>
+            <span class="k">pass</span>
+
+        <span class="k">elif</span> <span class="nb">str</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span> <span class="o">==</span> <span class="s">&quot;1&quot;</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialed_symbols</span><span class="p">)</span> <span class="o">==</span> <span class="mi">9</span><span class="p">:</span>
+            <span class="n">last_symbol</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="c">#finished inputting 9 symbol address</span>
+            <span class="k">print</span> <span class="s">&quot;Finished inputting 9 symbol address&quot;</span>
+            <span class="k">pass</span>
+
+        <span class="k">if</span> <span class="n">last_symbol</span><span class="p">:</span>
+
+            <span class="n">success</span> <span class="o">=</span> <span class="bp">True</span>
+
+            <span class="k">for</span> <span class="n">address</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">address_book_model</span><span class="o">.</span><span class="n">addresses</span><span class="p">:</span>
+
+                <span class="n">success</span> <span class="o">=</span> <span class="bp">True</span>
+
+                <span class="c">#automatically set final symbol to symbol with code 1 as the terminator</span>
+                <span class="k">if</span> <span class="n">address</span><span class="o">.</span><span class="n">symbol7</span> <span class="o">==</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">address</span><span class="o">.</span><span class="n">symbol8</span> <span class="o">==</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">address</span><span class="o">.</span><span class="n">symbol9</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="n">address</span><span class="o">.</span><span class="n">symbol7</span> <span class="o">=</span> <span class="n">SymbolModel</span><span class="p">(</span><span class="s">&quot;1&quot;</span><span class="p">)</span>
+
+                <span class="k">elif</span> <span class="n">address</span><span class="o">.</span><span class="n">symbol8</span> <span class="o">==</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">address</span><span class="o">.</span><span class="n">symbol9</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="n">address</span><span class="o">.</span><span class="n">symbol8</span> <span class="o">=</span> <span class="n">SymbolModel</span><span class="p">(</span><span class="s">&quot;1&quot;</span><span class="p">)</span>
+
+                <span class="k">elif</span> <span class="n">address</span><span class="o">.</span><span class="n">symbol9</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="n">address</span><span class="o">.</span><span class="n">symbol9</span> <span class="o">=</span> <span class="n">SymbolModel</span><span class="p">(</span><span class="s">&quot;1&quot;</span><span class="p">)</span>
+
+                <span class="n">check_string</span> <span class="o">=</span> <span class="s">&quot;Check address: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol1</span><span class="o">.</span><span class="n">code</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;-&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol2</span><span class="o">.</span><span class="n">code</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;-&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol3</span><span class="o">.</span><span class="n">code</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;-&quot;</span>\
+                               <span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol4</span><span class="o">.</span><span class="n">code</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;-&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol5</span><span class="o">.</span><span class="n">code</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;-&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol6</span><span class="o">.</span><span class="n">code</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;-&quot;</span>
+
+                <span class="k">if</span> <span class="n">address</span><span class="o">.</span><span class="n">symbol7</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="n">check_string</span> <span class="o">+=</span> <span class="n">address</span><span class="o">.</span><span class="n">symbol7</span><span class="o">.</span><span class="n">code</span><span class="o">+</span><span class="s">&quot;-&quot;</span>
+
+                <span class="k">if</span> <span class="n">address</span><span class="o">.</span><span class="n">symbol8</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="n">check_string</span> <span class="o">+=</span> <span class="n">address</span><span class="o">.</span><span class="n">symbol8</span><span class="o">.</span><span class="n">code</span><span class="o">+</span><span class="s">&quot;-&quot;</span>
+
+                <span class="k">if</span> <span class="n">address</span><span class="o">.</span><span class="n">symbol9</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="n">check_string</span> <span class="o">+=</span> <span class="n">address</span><span class="o">.</span><span class="n">symbol9</span><span class="o">.</span><span class="n">code</span>
+
+                <span class="k">print</span> <span class="n">check_string</span>
+
+                <span class="sd">&#39;&#39;&#39;print &quot;against address: &quot;+str(symbol1)+&quot;-&quot;+str(symbol2)+&quot;-&quot;+str(symbol3)+&quot;-&quot;+str(symbol4)+&quot;-&quot;+str(symbol5)+\</span>
+<span class="sd">                      &quot;-&quot;+str(symbol6)+&quot;-&quot;+str(symbol7)+&quot;-&quot;+str(symbol8)+&quot;-&quot;+str(symbol9)&#39;&#39;&#39;</span>
+
+                <span class="c">#match entered symbols against gate addresses</span>
+                <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol1</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialed_symbols</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol2</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="o">==</span> \
+                        <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialed_symbols</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol3</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialed_symbols</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="ow">and</span> \
+                                <span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol4</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialed_symbols</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="ow">and</span> \
+                                <span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol5</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialed_symbols</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span> <span class="ow">and</span> \
+                                <span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol6</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialed_symbols</span><span class="p">[</span><span class="mi">5</span><span class="p">]):</span>
+                    <span class="k">pass</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">success</span> <span class="o">=</span> <span class="bp">False</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol7</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialed_symbols</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">6</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol7</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="o">==</span> \
+                        <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialed_symbols</span><span class="p">[</span><span class="mi">6</span><span class="p">]):</span>
+                    <span class="k">pass</span>
+                <span class="k">elif</span> <span class="n">address</span><span class="o">.</span><span class="n">symbol7</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialed_symbols</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">7</span><span class="p">:</span>
+                    <span class="k">pass</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">success</span> <span class="o">=</span> <span class="bp">False</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol8</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialed_symbols</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">7</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol8</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="o">==</span> \
+                        <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialed_symbols</span><span class="p">[</span><span class="mi">7</span><span class="p">]):</span>
+                    <span class="k">pass</span>
+                <span class="k">elif</span> <span class="n">address</span><span class="o">.</span><span class="n">symbol8</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialed_symbols</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">:</span>
+                    <span class="k">pass</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">success</span> <span class="o">=</span> <span class="bp">False</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol9</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialed_symbols</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">8</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol9</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="o">==</span> \
+                        <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialed_symbols</span><span class="p">[</span><span class="mi">8</span><span class="p">]):</span>
+                    <span class="k">pass</span>
+                <span class="k">elif</span> <span class="n">address</span><span class="o">.</span><span class="n">symbol9</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialed_symbols</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">9</span><span class="p">:</span>
+                    <span class="k">pass</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">success</span> <span class="o">=</span> <span class="bp">False</span>
+
+                <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
+                    <span class="k">break</span>
+
+            <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
+                <span class="n">event</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">Event</span><span class="p">(</span><span class="n">EventType</span><span class="o">.</span><span class="n">SOUND_ADD_TO_QUEUE</span><span class="p">,</span> <span class="p">{</span>
+                    <span class="s">&quot;value&quot;</span><span class="p">:</span> <span class="s">&quot;gate-engage&quot;</span>
+                <span class="p">}))</span>
+
+                <span class="n">event</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">Event</span><span class="p">(</span><span class="n">EventType</span><span class="o">.</span><span class="n">SOUND_LOOPING_PLAY_WHEN_IDLE</span><span class="p">,</span> <span class="p">{</span>
+                    <span class="s">&quot;value&quot;</span><span class="p">:</span> <span class="s">&quot;gate-loop&quot;</span>
+                <span class="p">}))</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">gate_active</span> <span class="o">=</span> <span class="bp">True</span>
+
+            <span class="k">elif</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
+                <span class="n">event</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">Event</span><span class="p">(</span><span class="n">EventType</span><span class="o">.</span><span class="n">SOUND_ADD_TO_QUEUE</span><span class="p">,</span> <span class="p">{</span>
+                    <span class="s">&quot;value&quot;</span><span class="p">:</span> <span class="s">&quot;gate-no-engage&quot;</span>
+                <span class="p">}))</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">dialed_symbols</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="k">print</span> <span class="s">&quot;Dialing success: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">success</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="DialerController.dial_auto"><a class="viewcode-back" href="../../../../../../nz.co.hazardmedia.sgdialer.controllers.html#nz.co.hazardmedia.sgdialer.controllers.DialerController.DialerController.dial_auto">[docs]</a>    <span class="k">def</span> <span class="nf">dial_auto</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol1</span><span class="p">,</span> <span class="n">symbol2</span><span class="p">,</span> <span class="n">symbol3</span><span class="p">,</span> <span class="n">symbol4</span><span class="p">,</span> <span class="n">symbol5</span><span class="p">,</span> <span class="n">symbol6</span><span class="p">,</span> <span class="n">symbol7</span><span class="p">,</span> <span class="n">symbol8</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">symbol9</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">):</span>
 
@@ -139,7 +316,7 @@
                   <span class="s">&quot;-&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">symbol6</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;-&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">symbol7</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;-&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">symbol8</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;-&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">symbol9</span><span class="p">)</span>
 
             <span class="c">#match entered symbols against gate addresses</span>
-            <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol1</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">symbol1</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol2</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">symbol2</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol3</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">symbol3</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol4</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">symbol4</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol4</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">symbol4</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol5</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">symbol5</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol6</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">symbol6</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol1</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">symbol1</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol2</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">symbol2</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol3</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">symbol3</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol4</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">symbol4</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol5</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">symbol5</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">address</span><span class="o">.</span><span class="n">symbol6</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">symbol6</span><span class="p">):</span>
                 <span class="k">pass</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">success</span> <span class="o">=</span> <span class="bp">False</span>

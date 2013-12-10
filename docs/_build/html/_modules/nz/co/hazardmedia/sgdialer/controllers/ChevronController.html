@@ -55,29 +55,37 @@
 
 
 <div class="viewcode-block" id="ChevronController"><a class="viewcode-back" href="../../../../../../nz.co.hazardmedia.sgdialer.controllers.html#nz.co.hazardmedia.sgdialer.controllers.ChevronController.ChevronController">[docs]</a><span class="k">class</span> <span class="nc">ChevronController</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="n">chevron1</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="n">chevron2</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="n">chevron3</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="n">chevron4</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="n">chevron5</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="n">chevron6</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="n">chevron7</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="n">chevron8</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="n">chevron9</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">chevron_model</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">chevron1</span> <span class="o">=</span> <span class="n">ChevronModel</span><span class="p">(</span><span class="s">&quot;Chevron 1&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">chevron2</span> <span class="o">=</span> <span class="n">ChevronModel</span><span class="p">(</span><span class="s">&quot;Chevron 2&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">chevron3</span> <span class="o">=</span> <span class="n">ChevronModel</span><span class="p">(</span><span class="s">&quot;Chevron 3&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">chevron4</span> <span class="o">=</span> <span class="n">ChevronModel</span><span class="p">(</span><span class="s">&quot;Chevron 4&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">chevron5</span> <span class="o">=</span> <span class="n">ChevronModel</span><span class="p">(</span><span class="s">&quot;Chevron 5&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">chevron6</span> <span class="o">=</span> <span class="n">ChevronModel</span><span class="p">(</span><span class="s">&quot;Chevron 6&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">chevron7</span> <span class="o">=</span> <span class="n">ChevronModel</span><span class="p">(</span><span class="s">&quot;Chevron 7&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">chevron8</span> <span class="o">=</span> <span class="n">ChevronModel</span><span class="p">(</span><span class="s">&quot;Chevron 8&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">chevron9</span> <span class="o">=</span> <span class="n">ChevronModel</span><span class="p">(</span><span class="s">&quot;Chevron 9&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
+
+        <span class="k">if</span> <span class="nb">id</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Chevron 1&quot;</span>
+        <span class="k">elif</span> <span class="nb">id</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Chevron 2&quot;</span>
+        <span class="k">elif</span> <span class="nb">id</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Chevron 3&quot;</span>
+        <span class="k">elif</span> <span class="nb">id</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Chevron 4&quot;</span>
+        <span class="k">elif</span> <span class="nb">id</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Chevron 5&quot;</span>
+        <span class="k">elif</span> <span class="nb">id</span> <span class="o">==</span> <span class="mi">6</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Chevron 6&quot;</span>
+        <span class="k">elif</span> <span class="nb">id</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Chevron 7&quot;</span>
+        <span class="k">elif</span> <span class="nb">id</span> <span class="o">==</span> <span class="mi">8</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Chevron 8&quot;</span>
+        <span class="k">elif</span> <span class="nb">id</span> <span class="o">==</span> <span class="mi">9</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Chevron 9&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">chevron_model</span> <span class="o">=</span> <span class="n">ChevronModel</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 
         <span class="k">print</span> <span class="s">&quot;ChevronController initialized.&quot;</span>
-        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="ChevronController.lock"><a class="viewcode-back" href="../../../../../../nz.co.hazardmedia.sgdialer.controllers.html#nz.co.hazardmedia.sgdialer.controllers.ChevronController.ChevronController.lock">[docs]</a>    <span class="k">def</span> <span class="nf">lock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chevron_model</span><span class="o">.</span><span class="n">locked</span> <span class="o">=</span> <span class="bp">True</span></div></div>
 </pre></div>
 
           </div>
